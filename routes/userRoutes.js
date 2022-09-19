@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const db = require("../db-config/db-config");
+const e = require("express");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 router.post(
@@ -21,11 +22,18 @@ router.post(
       res.status(422).send({ errors: errors.array() });
     } else {
       const { email, password } = req.body;
-      let sql = `INSERT INTO entertainment_web.users (email, password)
-  VALUES ('${email}','${password}');`;
-      db.db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send(result);
+      let sqlCredCheck = `SELECT * FROM entertainment_web.users WHERE email='${email}'`;
+      db.db.query(sqlCredCheck, (err, result) => {
+        if (result.length === 1) {
+          return res.status(200).json({ errors: "Account already exists" });
+        } else {
+          let sql = `INSERT INTO entertainment_web.users (email, password)
+          VALUES ('${email}','${password}');`;
+          db.db.query(sql, (err, result) => {
+            if (err) throw err;
+            res.send(result);
+          });
+        }
       });
     }
   }
