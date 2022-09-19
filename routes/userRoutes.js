@@ -1,25 +1,35 @@
 const express = require("express");
 const router = express.Router();
+const { urlencoded } = require("body-parser");
+const bodyParser = require("body-parser");
+const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const db = require("../db-config/db-config");
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-router.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
-  console.log(email, password);
-  let sql = `INSERT INTO entertainment_web.users (email, password)
+router.post(
+  "/signup",
+  urlencodedParser,
+  [
+    check("email", "Please enter a valid email format")
+      .isEmail()
+      .normalizeEmail(),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(422).send({ errors: errors.array() });
+    } else {
+      const { email, password } = req.body;
+      let sql = `INSERT INTO entertainment_web.users (email, password)
   VALUES ('${email}','${password}');`;
-  db.db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.send(result);
-  });
-
-  //   users[username] = {
-  //     email,
-  //     password, // NOTE: Passwords should NEVER be stored in the clear like this. Use a              // library like bcrypt to Hash the password. For demo purposes only.
-  //   };
-  //   console.log("Users Object:", users);
-  //   res.json({ success: "true" });
-});
+      db.db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+      });
+    }
+  }
+);
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
