@@ -15,12 +15,6 @@ app.use(express.static(__dirname + "/assets/thumbnails/"));
 app.use("/users", userRoutes);
 app.set("view enginer", "ejs");
 
-db.db.connect((error) => {
-  if (error) {
-    console.log("error connecting db", error);
-  }
-});
-
 app.get("/", function (req, res) {
   res.send("Welcome to my entertainment web app API!");
 });
