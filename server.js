@@ -17,7 +17,7 @@ app.set("view enginer", "ejs");
 
 db.db.connect((error) => {
   if (error) {
-    throw error;
+    console.log("error connecting db", error);
   }
 });
 
