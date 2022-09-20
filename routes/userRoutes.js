@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const db = require("../db-config/db-config");
-const e = require("express");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 router.post(
