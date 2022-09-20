@@ -53,7 +53,8 @@ app.get("/recommended", (req, res) => {
 });
 
 app.get("/series", (req, res) => {
-  let sql = "SELECT * FROM entertainment_web.data where category='TV Series';";
+  let sql =
+    "SELECT * FROM heroku_bf65c7f5a682285.data where category='TV Series';";
   db.db.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
