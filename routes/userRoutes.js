@@ -22,13 +22,13 @@ router.post(
     } else {
       const { email, password } = req.body;
       let sqlCredCheck = `SELECT * FROM heroku_bf65c7f5a682285.users WHERE email='${email}'`;
-      db.query(sqlCredCheck, (err, result) => {
+      db.db.query(sqlCredCheck, (err, result) => {
         if (result.length === 1) {
           return res.status(200).json({ errors: "Account already exists" });
         } else {
           let sql = `INSERT INTO heroku_bf65c7f5a682285.users (email, password)
           VALUES ('${email}','${password}');`;
-          db.query(sql, (err, result) => {
+          db.db.query(sql, (err, result) => {
             if (err) throw err;
             res.send(result);
           });
