@@ -29,7 +29,7 @@ router.post(
             return res.status(200).json({ errors: "Account already exists" });
           } else {
             let sql = `INSERT INTO heroku_bf65c7f5a682285.users (email, password)
-            VALUES ('${email}','${password}');`;
+            VALUES ('${email}','${hash}');`;
             db.db.query(sql, (err, result) => {
               if (err) throw err;
               res.send(result);
