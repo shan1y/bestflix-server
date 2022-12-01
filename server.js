@@ -21,7 +21,7 @@ app.get("/", function (req, res) {
 
 app.get("/bookmarked", (req, res) => {
   let sql =
-    "SELECT * FROM heroku_bf65c7f5a682285.data where isBookmarked='true';";
+    "SELECT * FROM entertainment_web.data where isBookmarked='true';";
   db.db.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -30,7 +30,7 @@ app.get("/bookmarked", (req, res) => {
 
 app.get("/trending", (req, res) => {
   let sql =
-    "SELECT * FROM heroku_bf65c7f5a682285.data where isTrending='true';";
+    "SELECT * FROM entertainment_web.data where isTrending='true';";
   db.db.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -39,7 +39,7 @@ app.get("/trending", (req, res) => {
 
 app.get("/recommended", (req, res) => {
   let sql =
-    "SELECT * FROM heroku_bf65c7f5a682285.data where isTrending='false';";
+    "SELECT * FROM entertainment_web.data where isTrending='false';";
   db.db.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -48,7 +48,7 @@ app.get("/recommended", (req, res) => {
 
 app.get("/series", (req, res) => {
   let sql =
-    "SELECT * FROM heroku_bf65c7f5a682285.data where category='TV Series';";
+    "SELECT * FROM entertainment_web.data where category='TV Series';";
   db.db.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -56,7 +56,7 @@ app.get("/series", (req, res) => {
 });
 
 app.get("/movie", (req, res) => {
-  let sql = "SELECT * FROM heroku_bf65c7f5a682285.data where category='Movie';";
+  let sql = "SELECT * FROM entertainment_web.data where category='Movie';";
   db.db.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
@@ -65,14 +65,14 @@ app.get("/movie", (req, res) => {
 
 app.patch("/bookmark/:id/:isBookmarked", (req, res) => {
   if (req.params.isBookmarked === "False") {
-    let sql = `UPDATE heroku_bf65c7f5a682285.data
+    let sql = `UPDATE entertainment_webdata
         SET isBookmarked = 'True' WHERE id=${req.params.id}`;
     db.db.query(sql, (err, result) => {
       if (err) throw err;
       res.send(result);
     });
   } else {
-    let sql = `UPDATE heroku_bf65c7f5a682285.data
+    let sql = `UPDATE entertainment_web.data
         SET isBookmarked = 'False' WHERE id=${req.params.id}`;
     db.db.query(sql, (err, result) => {
       if (err) throw err;

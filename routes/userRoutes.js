@@ -23,12 +23,12 @@ router.post(
     } else {
       const { email, password } = req.body;
       bcrypt.hash(password, saltRounds).then(async function (hash) {
-        let sqlCredCheck = `SELECT * FROM heroku_bf65c7f5a682285.users WHERE email='${email}'`;
+        let sqlCredCheck = `SELECT * FROM entertainment_web.users WHERE email='${email}'`;
         db.db.query(sqlCredCheck, (err, result) => {
           if (result.length === 1) {
             return res.status(200).json({ errors: "Account already exists" });
           } else {
-            let sql = `INSERT INTO heroku_bf65c7f5a682285.users (email, password)
+            let sql = `INSERT INTO entertainment_web.users (email, password)
             VALUES ('${email}','${hash}');`;
             db.db.query(sql, (err, result) => {
               if (err) throw err;
@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
       .json({ error: "Login requires email and password fields" });
   }
 
-  let sql = `SELECT * FROM heroku_bf65c7f5a682285.users WHERE email='${email}'`;
+  let sql = `SELECT * FROM entertainment_web.users WHERE email='${email}'`;
   db.db.query(sql, (err, result) => {
     if (err) throw err;
     if (result.length !== 1) {
