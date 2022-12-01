@@ -6,7 +6,7 @@ const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 dotenv.config();
 const db = require("./db-config/db-config");
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8088;
 
 app.use(cors());
 
@@ -65,7 +65,7 @@ app.get("/movie", (req, res) => {
 
 app.patch("/bookmark/:id/:isBookmarked", (req, res) => {
   if (req.params.isBookmarked === "False") {
-    let sql = `UPDATE entertainment_webdata
+    let sql = `UPDATE entertainment_web.data
         SET isBookmarked = 'True' WHERE id=${req.params.id}`;
     db.db.query(sql, (err, result) => {
       if (err) throw err;
