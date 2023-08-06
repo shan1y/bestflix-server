@@ -21,5 +21,8 @@
     "logger": "^0.0.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.4.2"
   }
 }
